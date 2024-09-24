@@ -1,0 +1,68 @@
+import { Text, TouchableOpacity } from "react-native";
+import React, { ComponentProps } from "react";
+import { cn } from "@/lib/cn";
+import { Link } from "expo-router";
+
+interface LinkButtonProps extends ComponentProps<typeof TouchableOpacity> {
+  className?: string;
+  children?: React.ReactNode;
+  isLoading?: boolean;
+  variant?: "primary" | "outline";
+  href?: string;
+}
+
+const LinkButton = ({
+  children,
+  className,
+  isLoading,
+  variant = "primary",
+  href,
+  ...props
+}: LinkButtonProps) => {
+  return (
+    <Link
+      href={variant === "primary" ? "/login" : "/register"}
+      className="mb-2"
+      asChild
+    >
+      <TouchableOpacity
+        activeOpacity={0.7}
+        disabled={isLoading}
+        className={cn(
+          "items-center  justify-center rounded-md flex flex-row ",
+          variant === "primary" && "bg-primary",
+          variant === "outline" && "border border-primary",
+          className
+        )}
+        {...props}
+      >
+        <Text
+          className={cn(
+            "py-4 font-poppins font-semibold text-xl",
+            variant === "outline" && "text-primary",
+            variant === "primary" && "text-foreground"
+          )}
+        >
+          {children}
+        </Text>
+      </TouchableOpacity>
+    </Link>
+  );
+};
+
+export default LinkButton;
+
+{
+  /* {isLoading && ()} */
+}
+{
+  /* <Text
+        className={cn(
+            "ml-2 animate-spin transition-all duration-1000",
+            variant === "outline" && "text-primary",
+            variant === "primary" && "text-foreground"
+            )}
+            >
+            <AntDesign name="loading1" size={16} />
+            </Text> */
+}
