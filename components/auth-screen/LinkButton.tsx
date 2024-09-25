@@ -1,7 +1,6 @@
 import { Text, TouchableOpacity } from "react-native";
 import React, { ComponentProps } from "react";
 import { cn } from "@/lib/cn";
-import { Link } from "expo-router";
 
 interface LinkButtonProps extends ComponentProps<typeof TouchableOpacity> {
   className?: string;
@@ -20,33 +19,27 @@ const LinkButton = ({
   ...props
 }: LinkButtonProps) => {
   return (
-    <Link
-      href={variant === "primary" ? "/login" : "/register"}
-      className="mb-2"
-      asChild
+    <TouchableOpacity
+      activeOpacity={0.7}
+      disabled={isLoading}
+      className={cn(
+        "items-center  justify-center rounded-md flex flex-row ",
+        variant === "primary" && "bg-primary",
+        variant === "outline" && "border border-primary",
+        className
+      )}
+      {...props}
     >
-      <TouchableOpacity
-        activeOpacity={0.7}
-        disabled={isLoading}
+      <Text
         className={cn(
-          "items-center  justify-center rounded-md flex flex-row ",
-          variant === "primary" && "bg-primary",
-          variant === "outline" && "border border-primary",
-          className
+          "py-4 font-poppins font-semibold text-xl",
+          variant === "outline" && "text-primary",
+          variant === "primary" && "text-foreground"
         )}
-        {...props}
       >
-        <Text
-          className={cn(
-            "py-4 font-poppins font-semibold text-xl",
-            variant === "outline" && "text-primary",
-            variant === "primary" && "text-foreground"
-          )}
-        >
-          {children}
-        </Text>
-      </TouchableOpacity>
-    </Link>
+        {children}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
