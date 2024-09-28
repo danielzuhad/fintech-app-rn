@@ -23,7 +23,7 @@ const LinkButton = ({
       activeOpacity={0.7}
       disabled={isLoading}
       className={cn(
-        "items-center  justify-center rounded-md flex flex-row ",
+        "items-center shadow-sm shadow-black justify-center rounded-3xl flex flex-row ",
         variant === "primary" && "bg-primary",
         variant === "outline" && "border border-primary",
         className
@@ -32,7 +32,7 @@ const LinkButton = ({
     >
       <Text
         className={cn(
-          "py-4 font-poppins font-semibold text-xl",
+          "py-3 font-poppins font-semibold text-lg",
           variant === "outline" && "text-primary",
           variant === "primary" && "text-foreground"
         )}

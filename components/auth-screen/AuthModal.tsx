@@ -7,10 +7,41 @@ import {
 } from "react-native";
 import React from "react";
 import { LOGIN_OPTIONS } from "./constants";
+import { useOAuth, useSignUp } from "@clerk/clerk-expo";
+import { OAuthStrategy } from "@clerk/types";
+import { useWarmUpBrowser } from "@/hooks/useWarmUpBrowser";
 
 const AuthModal = () => {
+  useWarmUpBrowser();
+
+  const { setActive } = useSignUp();
+  const { startOAuthFlow: googleAuth } = useOAuth({ strategy: "oauth_google" });
+  const { startOAuthFlow: facebookAuth } = useOAuth({
+    strategy: "oauth_facebook",
+  });
+  const { startOAuthFlow: appleAuth } = useOAuth({ strategy: "oauth_apple" });
+
   const onSelectedAuth = async (AuthType: string) => {
-    console.log({ AuthType });
+    const selectedAuth = {
+      Google: googleAuth,
+      Facebook: facebookAuth,
+      Apple: appleAuth,
+    }[AuthType];
+
+    if (!selectedAuth) {
+      return;
+    }
+
+    try {
+      const { createdSessionId, setActive } = await selectedAuth();
+
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+        console.log("Session created: ", createdSessionId);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const AuthComp = ({
@@ -19,6 +50,7 @@ const AuthModal = () => {
   }: {
     imgUrl: ImageSourcePropType;
     label: string;
+    strategy: OAuthStrategy;
   }) => {
     return (
       <TouchableOpacity
@@ -43,7 +75,11 @@ const AuthModal = () => {
       }}
       data={LOGIN_OPTIONS}
       renderItem={({ item }) => (
-        <AuthComp imgUrl={item.icon} label={item.label} />
+        <AuthComp
+          strategy={item.strategy}
+          imgUrl={item.icon}
+          label={item.label}
+        />
       )}
       keyExtractor={(item) => item.label}
     />

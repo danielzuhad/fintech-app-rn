@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import React, { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LinkButton from "@/components/auth-screen/LinkButton";
@@ -34,23 +34,28 @@ const IndexPage = () => {
     <SafeAreaView className="items-center justify-between flex-1 px-2 pt-48 bg-background">
       <BottomSheetModalProvider>
         <View className="items-center justify-center ">
-          <Text className="text-4xl font-bold text-primary font-poppins ">
-            Financial Tech App
+          <Image
+            style={{ resizeMode: "contain" }}
+            className="mb-16 w-28 h-28"
+            source={require("@/assets/icons/euro-money.png")}
+          />
+
+          <Text className="text-2xl font-bold text-center text-backgroundForeground font-poppins ">
+            Welcome to Financial Tech App
           </Text>
 
-          <Text className="mt-2 text-base leading-loose text-center text-primary/50 font-poppins">
+          <Text className="mt-2 text-sm leading-loose text-center text-backgroundForeground/50 font-poppins">
             Embark on a seamless financial journey with FinSmart, where
             innovation meets security in the symphony of your economic
             aspirations.
           </Text>
         </View>
 
-        <View className="w-full px-4 pb-28">
+        <View className="w-full px-4 pb-16">
           <LinkButton onPress={showModal}>Get Started</LinkButton>
         </View>
 
         {/* Modal */}
-
         <BottomSheetModal
           backdropComponent={renderBackdrop}
           ref={bottomSheetModalRef}
