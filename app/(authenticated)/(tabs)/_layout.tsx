@@ -1,11 +1,26 @@
 import React from "react";
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
+import { FontAwesome } from "@expo/vector-icons";
+import Colors from "@/constants/Colors";
 
 const Layout = () => {
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="home" options={{ headerShown: false }} />
-    </Stack>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: Colors.primary,
+      }}
+    >
+      <Tabs.Screen
+        name="home"
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <FontAwesome name="home" size={size} color={color} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 };
 

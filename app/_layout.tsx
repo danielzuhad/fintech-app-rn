@@ -80,18 +80,16 @@ export default function RootLayout() {
   }
 
   return (
-    <>
-      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-        <ClerkLoaded>
-          <ActionSheetProvider>
-            <GestureHandlerRootView style={{ flex: 1 }}>
-              <StatusBar style="dark" />
-              <RootLayoutNav />
-            </GestureHandlerRootView>
-          </ActionSheetProvider>
-        </ClerkLoaded>
-      </ClerkProvider>
-    </>
+    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+      <ClerkLoaded>
+        <ActionSheetProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar style="light" />
+            <RootLayoutNav />
+          </GestureHandlerRootView>
+        </ActionSheetProvider>
+      </ClerkLoaded>
+    </ClerkProvider>
   );
 }
 
