@@ -5,6 +5,7 @@ import Colors from "@/constants/Colors";
 import Welcome from "@/components/home/welcome";
 import { StatusBar } from "expo-status-bar";
 import Balance from "@/components/home/balance";
+import Actions from "@/components/home/actions";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
       >
         <Welcome />
         <Balance />
+        <Actions />
         <Text> Home</Text>
       </ScrollView>
       <StatusBar style="dark" backgroundColor={Colors.background} />
