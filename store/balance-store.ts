@@ -1,19 +1,45 @@
-import { StateStorage } from "zustand/middleware";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { zustandStorage } from "./mmkv-storage";
 
-import { MMKV } from "react-native-mmkv";
+export interface TransactionType {
+  id: string;
+  amount: number;
+  title: string;
+  date: Date;
+}
 
-const storage = new MMKV({
-  id: "balance-storage",
-});
+export interface BalanceStateType {
+  transactions: TransactionType[];
+  runTransaction: (transaction: TransactionType) => void;
+  balance: () => number;
+  clearTransactions: () => void;
+}
 
-const balanceStore: StateStorage = {
-  setItem(name, value) {
-    return storage.set(name, value);
-  },
-  getItem(name) {
-    return storage.getString(name) ?? null;
-  },
-  removeItem(name) {
-    return storage.delete(name);
-  },
-};
+export const useBalanceStore = create<BalanceStateType>()(
+  persist(
+    (set, get) => ({
+      transactions: [],
+      runTransaction: (transaction: TransactionType) => {
+        set((state) => ({
+          transactions: [...state.transactions, transaction],
+        }));
+      },
+      balance: () => {
+        const { transactions } = get();
+        let balance = 0;
+        transactions.forEach((transaction) => {
+          balance += transaction.amount;
+        });
+        return balance;
+      },
+      clearTransactions: () => {
+        set({ transactions: [] });
+      },
+    }),
+    {
+      name: "balance-storage",
+      storage: createJSONStorage(() => zustandStorage),
+    }
+  )
+);

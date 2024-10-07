@@ -8,6 +8,7 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import AuthModal from "@/components/auth-screen/AuthModal";
+import Colors from "@/constants/Colors";
 
 const IndexPage = () => {
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
@@ -31,7 +32,10 @@ const IndexPage = () => {
   );
 
   return (
-    <SafeAreaView className="items-center justify-between flex-1 px-2 pt-48 bg-background">
+    <SafeAreaView
+      className="items-center justify-between flex-1 px-2 pt-48 "
+      style={{ backgroundColor: Colors.background }}
+    >
       <BottomSheetModalProvider>
         <View className="items-center justify-center ">
           <Image

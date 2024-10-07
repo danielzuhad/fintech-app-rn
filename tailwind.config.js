@@ -8,7 +8,7 @@ module.exports = {
         foreground: "#ffffff",
         secondary: "#C9D6DF",
         danger: "#ba1a1a",
-        background: "#F0F5F9",
+        background: "#F5F5F7",
         backgroundForeground: "#171c1f",
         outline: "#52616B",
       },

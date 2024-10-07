@@ -2,14 +2,15 @@ import { View, Text } from "react-native";
 import React from "react";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
+import { useBalanceStore } from "@/store/balance-store";
+import { formatCurrency } from "@/util/formatCurrency";
 
 const Balance = () => {
-  const [showBalance, setShowBalance] = React.useState(true);
+  const [isShowBalance, setIsShowBalance] = React.useState(false);
+  const { balance } = useBalanceStore();
 
-  let balance = 200;
-
-  const handleShowBalance = () => {
-    setShowBalance(!showBalance);
+  const handleisShowBalance = () => {
+    setIsShowBalance(!isShowBalance);
   };
 
   return (
@@ -19,11 +20,13 @@ const Balance = () => {
       <View className="flex-row items-center justify-center w-full h-32 gap-x-2">
         <Text className="text-lg">Rp</Text>
 
-        {showBalance ? (
+        {isShowBalance ? (
           <View className="flex-row items-center gap-x-2">
-            <Text className="text-5xl font-bold text-primary">{balance}</Text>
+            <Text className="pt-3 text-5xl font-bold text-center text-primary line-clamp-1">
+              {formatCurrency(balance())}
+            </Text>
             <Ionicons
-              onPress={handleShowBalance}
+              onPress={handleisShowBalance}
               name="eye-off"
               size={24}
               color="black"
@@ -40,7 +43,7 @@ const Balance = () => {
               />
             ))}
             <Ionicons
-              onPress={handleShowBalance}
+              onPress={handleisShowBalance}
               name="eye"
               size={24}
               color="black"
